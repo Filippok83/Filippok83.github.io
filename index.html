@@ -1,181 +1,2570 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>21×РУДН | Terminal Quest</title>
-    <style>
-        :root { --bg: #0f111a; --text: #00ff41; --accent: #008F11; --white: #e0e0e0; }
-        body { background: var(--bg); color: var(--text); font-family: 'Courier New', monospace; margin: 0; padding: 20px; display: flex; flex-direction: column; min-height: 100vh; }
-        .container { max-width: 400px; margin: 0 auto; width: 100%; }
-        h1, h2 { color: var(--white); text-transform: uppercase; letter-spacing: 1px; font-size: 1.2rem; }
-        .blink { animation: blinker 1s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
-        .btn { background: transparent; border: 1px solid var(--text); color: var(--text); padding: 12px; width: 100%; margin: 8px 0; cursor: pointer; font-family: inherit; font-size: 1rem; text-transform: uppercase; transition: 0.2s; }
-        .btn:hover { background: var(--text); color: var(--bg); }
-        .btn:disabled { border-color: #333; color: #333; cursor: not-allowed; }
-        input[type="text"] { background: transparent; border: 1px solid var(--accent); color: var(--white); padding: 10px; width: 100%; font-family: inherit; margin-bottom: 15px; box-sizing: border-box; }
-        .stat-row { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
-        .stat-btn { width: 30px; height: 30px; padding: 0; margin: 0; }
-        .hidden { display: none; }
-        .progress-bar { width: 100%; height: 4px; background: #333; margin: 20px 0; }
-        .progress-fill { height: 100%; background: var(--text); width: 0%; transition: width 0.3s; }
-        .meme-box { border: 2px solid var(--white); padding: 20px; text-align: center; margin: 20px 0; background: #1a1d29; }
-        .meme-text { color: var(--white); font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; }
-        .meme-mascot { font-size: 3rem; margin: 10px 0; }
-        .small-text { font-size: 0.8rem; color: #888; margin-top: 20px; text-align: center; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ШКОЛА 21 × РУДН | ОДИН ДЕНЬ В КАМПУСЕ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --neon-green: #44EB99;
+    --neon-green-light: #00FFAF;
+    --neon-green-dark: #18DD7C;
+    --purple: #861BE3;
+    --purple-light: #BA1BFF;
+    --dark-bg: #1D2633;
+    --darker-bg: #101518;
+    --text-gray: #C6CFDA;
+    --amber: #FFB305;
+    --red: #FF4A50;
+    --rudn-blue: #0066CC;
+}
+
+body {
+    background: var(--darker-bg);
+    color: var(--neon-green);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* CRT Scanline Effect */
+body::before {
+    content: " ";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, rgba(29, 38, 51, 0.9) 100%);
+    border: 2px solid var(--neon-green);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(68, 235, 153, 0.3);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.logo-21 {
+    font-size: 48px;
+    font-weight: bold;
+    color: var(--neon-green);
+    text-shadow: 0 0 20px var(--neon-green);
+    letter-spacing: -3px;
+    position: relative;
+}
+
+.logo-21::after {
+    content: "ШКОЛА";
+    position: absolute;
+    right: -12px;
+    top: 10px;
+    font-size: 10px;
+    writing-mode: vertical-rl;
+    letter-spacing: 3px;
+    color: var(--text-gray);
+}
+
+.logo-x {
+    font-size: 24px;
+    color: var(--purple);
+    text-shadow: 0 0 10px var(--purple);
+}
+
+.logo-rudn {
+    font-size: 36px;
+    color: var(--rudn-blue);
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(0, 102, 204, 0.5);
+}
+
+.header h1 {
+    font-size: 22px;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-top: 8px;
+}
+
+.header-subtitle {
+    color: var(--text-gray);
+    font-size: 12px;
+    margin-top: 5px;
+    letter-spacing: 2px;
+}
+
+/* Character Creation Screen */
+.char-creation-screen {
+    background: var(--dark-bg);
+    border: 3px solid var(--neon-green);
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.char-creation-screen::before {
+    content: "TERMINAL v2.1 // ШКОЛА 21 × РУДН";
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: var(--darker-bg);
+    padding: 0 10px;
+    font-size: 11px;
+    color: var(--neon-green);
+}
+
+.char-title {
+    font-size: 24px;
+    color: var(--amber);
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border-bottom: 2px solid var(--neon-green);
+    padding-bottom: 10px;
+}
+
+.char-input-wrapper {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.char-input-label {
+    font-size: 14px;
+    color: var(--text-gray);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.char-input {
+    background: var(--darker-bg);
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    padding: 15px;
+    font-family: inherit;
+    font-size: 18px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.char-input:focus {
+    outline: none;
+    box-shadow: 0 0 20px var(--neon-green);
+    border-color: var(--neon-green-light);
+}
+
+.stats-distribution {
+    border: 2px solid var(--purple);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.distribution-title {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-gray);
+    margin-bottom: 25px;
+}
+
+.stats-grid-creation {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background: rgba(29, 38, 51, 0.5);
+    border: 1px solid var(--neon-green);
+    padding: 20px;
+    text-align: center;
+}
+
+.stat-name {
+    font-size: 12px;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.stat-value-display {
+    font-size: 32px;
+    color: var(--neon-green);
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px var(--neon-green);
+}
+
+.stat-bar-container {
+    width: 100%;
+    height: 4px;
+    background: var(--darker-bg);
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-green), var(--purple));
+    transition: width 0.3s;
+}
+
+.stat-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.stat-btn {
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    width: 40px;
+    height: 40px;
+    font-family: inherit;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.stat-btn:hover:not(:disabled) {
+    background: var(--neon-green);
+    color: var(--darker-bg);
+    box-shadow: 0 0 15px var(--neon-green);
+}
+
+.stat-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: var(--text-gray);
+    color: var(--text-gray);
+}
+
+.points-left {
+    text-align: center;
+    font-size: 16px;
+    color: var(--amber);
+    margin: 20px 0;
+}
+
+.points-left span {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--neon-green);
+}
+
+.start-game-btn {
+    display: block;
+    margin: 30px auto 0;
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    padding: 15px 40px;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: all 0.3s;
+}
+
+.start-game-btn:hover:not(:disabled) {
+    background: var(--neon-green);
+    color: var(--darker-bg);
+    box-shadow: 0 0 30px var(--neon-green);
+}
+
+.start-game-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Main Game Layout */
+.game-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 20px;
+    margin-bottom: 20px;
+    max-height: calc(100vh - 200px);
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Terminal Screen */
+.terminal {
+    background: var(--dark-bg);
+    border: 2px solid var(--neon-green);
+    padding: 25px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(68, 235, 153, 0.2);
+}
+
+.terminal::before {
+    content: "TERMINAL v2.1 // ШКОЛА 21 × РУДН";
+    position: absolute;
+    top: -12px;
+    left: 25px;
+    background: var(--darker-bg);
+    padding: 0 12px;
+    font-size: 11px;
+    color: var(--purple);
+    letter-spacing: 2px;
+}
+
+/* Quest Text */
+.quest-text {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    color: var(--text-gray);
+    white-space: pre-wrap;
+}
+
+.quest-title {
+    font-size: 20px;
+    color: var(--amber);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--neon-green);
+    padding-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+/* Choice Buttons */
+.choice-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.choice-btn {
+    background: linear-gradient(135deg, rgba(29, 38, 51, 0.8), rgba(16, 21, 24, 0.9));
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    padding: 25px 20px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.choice-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(68, 235, 153, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.choice-btn:hover::before {
+    left: 100%;
+}
+
+.choice-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--neon-green), var(--neon-green-dark));
+    color: var(--darker-bg);
+    box-shadow: 0 0 25px var(--neon-green);
+    transform: translateY(-3px);
+    border-color: var(--neon-green-light);
+}
+
+.choice-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: var(--text-gray);
+    color: var(--text-gray);
+}
+
+.choice-number {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 12px;
+    color: var(--purple);
+    font-weight: bold;
+}
+
+.choice-btn:hover:not(:disabled) .choice-number {
+    color: var(--darker-bg);
+}
+
+.choice-stat {
+    font-size: 12px;
+    margin-top: 8px;
+    color: var(--purple);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.choice-btn:hover:not(:disabled) .choice-stat {
+    color: var(--darker-bg);
+}
+
+/* Canvas Illustration Container - No Label */
+.illustration-container {
+    background: var(--dark-bg);
+    border: 2px solid var(--purple);
+    padding: 15px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(134, 27, 227, 0.3);
+}
+
+#sceneCanvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--neon-green);
+    background: var(--darker-bg);
+}
+
+/* Stats Panel */
+.stats-panel {
+    background: var(--dark-bg);
+    border: 2px solid var(--purple);
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(134, 27, 227, 0.3);
+}
+
+.stats-panel::before {
+    content: "ХАРАКТЕРИСТИКИ ПЕРСОНАЖА";
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: var(--darker-bg);
+    padding: 0 10px;
+    font-size: 10px;
+    color: var(--neon-green);
+    letter-spacing: 2px;
+}
+
+.stats-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(29, 38, 51, 0.5);
+    border: 1px solid rgba(68, 235, 153, 0.3);
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.stat-value {
+    font-size: 24px;
+    color: var(--neon-green);
+    font-weight: bold;
+    text-shadow: 0 0 10px var(--neon-green);
+}
+
+.stat-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--darker-bg);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-green), var(--purple));
+    box-shadow: 0 0 10px var(--neon-green);
+    transition: width 0.5s ease;
+}
+
+/* Result Box - Compact */
+.result-box {
+    padding: 15px;
+    border: 3px solid;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.result-box.success {
+    border-color: var(--neon-green);
+    background: rgba(68, 235, 153, 0.1);
+    box-shadow: 0 0 15px var(--neon-green);
+}
+
+.result-box.fail {
+    border-color: var(--red);
+    background: rgba(255, 74, 80, 0.1);
+    box-shadow: 0 0 15px var(--red);
+}
+
+.result-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.result-box.success .result-title {
+    color: var(--neon-green);
+}
+
+.result-box.fail .result-title {
+    color: var(--red);
+}
+
+.result-text {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.result-points {
+    color: var(--amber);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.result-stat-boost {
+    color: var(--neon-green);
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Buttons */
+.btn {
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    padding: 12px 25px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    margin: 5px;
+}
+
+.btn:hover {
+    background: var(--neon-green);
+    color: var(--darker-bg);
+    box-shadow: 0 0 20px var(--neon-green);
+}
+
+.btn-secondary {
+    border-color: var(--purple);
+    color: var(--purple);
+}
+
+.btn-secondary:hover {
+    background: var(--purple);
+    color: white;
+    box-shadow: 0 0 20px var(--purple);
+}
+
+/* Start Screen */
+.start-screen {
+    background: var(--dark-bg);
+    border: 2px solid var(--neon-green);
+    padding: 40px;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Result Screen - Compact */
+.result-screen {
+    background: var(--dark-bg);
+    border: 2px solid var(--neon-green);
+    padding: 30px;
+    position: relative;
+}
+
+.result-screen::before {
+    content: "TERMINAL v2.1 // ШКОЛА 21 × РУДН";
+    position: absolute;
+    top: -12px;
+    left: 25px;
+    background: var(--darker-bg);
+    padding: 0 12px;
+    font-size: 11px;
+    color: var(--purple);
+    letter-spacing: 2px;
+}
+
+.result-title-large {
+    font-size: 28px;
+    color: var(--amber);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(255, 179, 5, 0.5);
+}
+
+.result-score-large {
+    font-size: 42px;
+    color: var(--neon-green);
+    margin: 15px 0;
+    text-shadow: 0 0 30px var(--neon-green);
+    font-weight: bold;
+}
+
+.result-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.result-left {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.result-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.result-meme {
+    border: 3px solid var(--neon-green);
+    background: var(--darker-bg);
+    max-width: 100%;
+}
+
+.leaderboard {
+    background: rgba(29, 38, 51, 0.5);
+    border: 1px solid var(--purple);
+    padding: 15px;
+    margin-top: 15px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.leaderboard-title {
+    font-size: 16px;
+    color: var(--amber);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    margin: 5px 0;
+    background: rgba(68, 235, 153, 0.1);
+    border-left: 3px solid var(--neon-green);
+    font-size: 13px;
+}
+
+.leaderboard-item:nth-child(1) {
+    border-left-color: #FFD700;
+    background: rgba(255, 215, 0, 0.15);
+}
+
+.leaderboard-item:nth-child(2) {
+    border-left-color: #C0C0C0;
+    background: rgba(192, 192, 192, 0.15);
+}
+
+.leaderboard-item:nth-child(3) {
+    border-left-color: #CD7F32;
+    background: rgba(205, 127, 50, 0.15);
+}
+
+.leader-rank {
+    font-weight: bold;
+    color: var(--neon-green);
+    margin-right: 10px;
+}
+
+.leader-name {
+    flex: 1;
+    color: var(--text-gray);
+}
+
+.leader-score {
+    color: var(--amber);
+    font-weight: bold;
+}
+
+.file-controls {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Animations */
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.cursor {
+    display: inline-block;
+    width: 12px;
+    height: 20px;
+    background: var(--neon-green);
+    animation: blink 1s infinite;
+    margin-left: 5px;
+    box-shadow: 0 0 10px var(--neon-green);
+}
+
+.hidden {
+    display: none;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .game-layout {
+        grid-template-columns: 1fr;
+        max-height: none;
+    }
+    
+    .choice-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid-creation {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-21 {
+        font-size: 36px;
+    }
+    
+    .logo-rudn {
+        font-size: 28px;
+    }
+    
+    .choice-btn {
+        font-size: 14px;
+        min-height: 80px;
+    }
+    
+    .stat-value {
+        font-size: 20px;
+    }
+    
+    .result-title-large {
+        font-size: 22px;
+    }
+    
+    .result-score-large {
+        font-size: 32px;
+    }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- ЭКРАН 1: Сплэш -->
-        <div id="screen-splash">
-            <h1>ШКОЛА 21 × РУДН</h1>
-            <p>Центр прикладного программирования</p>
-            <p>ТЕКСТОВЫЙ КВЕСТ // TERMINAL QUEST <span class="blink">_</span></p>
-            <br>
-            <p style="color: var(--white);">Добро пожаловать в кампус. Твои действия определят твой путь.</p>
-            <button class="btn" onclick="showScreen('screen-create')">[ СОЗДАТЬ ПЕРСОНАЖА ]</button>
-            <button class="btn" onclick="alert('Кампус 21×РУДН: инновационное пространство, объединяющее академическое образование и цифровые практики.')">[ О КАМПУСЕ ]</button>
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-container">
+            <div style="position: relative;">
+                <div class="logo-21">21</div>
+            </div>
+            <div class="logo-x">×</div>
+            <div class="logo-rudn">РУДН</div>
         </div>
+        <h1>Центр прикладного программирования</h1>
+        <div class="header-subtitle">ТЕКСТОВЫЙ КВЕСТ // TERMINAL QUEST</div>
+    </div>
 
-        <!-- ЭКРАН 2: Создание персонажа -->
-        <div id="screen-create" class="hidden">
-            <h2>>> СОЗДАНИЕ ПЕРСОНАЖА</h2>
-            <input type="text" id="player-name" placeholder="Введите ваше имя (никнейм):">
-            <p>Распределите 10 очков:</p>
-            <div class="stat-row">
-                <span>ИНТЕЛЛЕКТ (INT)</span>
-                <div><button class="btn stat-btn" onclick="changeStat('int', -1)">-</button> <span id="val-int">0</span> <button class="btn stat-btn" onclick="changeStat('int', 1)">+</button></div>
-            </div>
-            <div class="stat-row">
-                <span>ХАРИЗМА (CHA)</span>
-                <div><button class="btn stat-btn" onclick="changeStat('cha', -1)">-</button> <span id="val-cha">0</span> <button class="btn stat-btn" onclick="changeStat('cha', 1)">+</button></div>
-            </div>
-            <div class="stat-row">
-                <span>ВЫНОСЛИВОСТЬ (END)</span>
-                <div><button class="btn stat-btn" onclick="changeStat('end', -1)">-</button> <span id="val-end">0</span> <button class="btn stat-btn" onclick="changeStat('end', 1)">+</button></div>
-            </div>
-            <p style="text-align: right;">Очков осталось: <span id="points-left" style="color: var(--white); font-weight: bold;">10</span></p>
-            <button class="btn" id="start-btn" onclick="startGame()" disabled>[ НАЧАТЬ ИГРУ ]</button>
+    <!-- Start Screen -->
+    <div id="startScreen" class="start-screen fade-in">
+        <div class="quest-title">>> ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ</div>
+        <div class="quest-text">
+Добро пожаловать в кампус Школы 21 × РУДН.
+
+Вы — новый студент. Впереди у вас первый день в Центре прикладного программирования.
+
+Ваши действия определят ваш путь:
+• Наладите связи с однокурсниками
+• Погрузитесь в код и алгоритмы  
+• Найдёте баланс между учёбой и жизнью
+
+Характеристики влияют на доступные действия и исходы событий.
+
+Готовы начать?<span class="cursor"></span>
         </div>
-
-        <!-- ЭКРАН 3: Игра -->
-        <div id="screen-game" class="hidden">
-            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-            <h2 id="quest-title">Сценарий 1</h2>
-            <p id="quest-text" style="color: var(--white); line-height: 1.5;"></p>
-            <button class="btn" id="choice-a" onclick="nextQuestion('A')"></button>
-            <button class="btn" id="choice-b" onclick="nextQuestion('B')"></button>
-        </div>
-
-        <!-- ЭКРАН 4: Результат -->
-        <div id="screen-result" class="hidden">
-            <h2>>> ОТЧЁТ О ПРОЙДЕННОМ ДНЕ</h2>
-            <div class="meme-box" id="meme-capture">
-                <div class="meme-mascot">🐢💻</div>
-                <div class="meme-text" id="result-title">Заголовок</div>
-                <p id="result-desc" style="color: #aaa; font-size: 0.9rem;">Описание</p>
-                <p style="margin-top: 15px; font-size: 0.7rem; color: var(--text);">21×РУДН | ЦЕНТР ПРИКЛАДНОГО ПРОГРАММИРОВАНИЯ</p>
-            </div>
-            <button class="btn" onclick="alert('Мем сохранен в галерею! (Демо-режим)')">[ СКАЧАТЬ МЕМ ]</button>
-            <button class="btn" onclick="alert('Таблица лидеров загружается... (Демо-режим)')">[ ТАБЛИЦА ЛИДЕРОВ ]</button>
-            <button class="btn" style="border-color: var(--white); color: var(--white);" onclick="window.open('https://21-school.ru', '_blank')">[ УЗНАТЬ О ПОСТУПЛЕНИИ ]</button>
-            <button class="btn" onclick="location.reload()">[ ЗАНОВО ]</button>
-            <p class="small-text">Размер страницы: < 100 КБ | Работает без интернета</p>
+        <div style="margin-top: 30px;">
+            <button class="btn" onclick="goToCharCreation()">[ СОЗДАТЬ ПЕРСОНАЖА ]</button>
+            <button class="btn btn-secondary" onclick="showInfo()">[ О КАМПУСЕ ]</button>
         </div>
     </div>
 
-    <script>
-        let stats = { int: 0, cha: 0, end: 0 };
-        let points = 10;
-        let currentQ = 0;
-        let playerName = "Студент";
+    <!-- Character Creation Screen -->
+    <div id="charScreen" class="char-creation-screen hidden">
+        <div class="char-title">>> СОЗДАНИЕ ПЕРСОНАЖА</div>
+        
+        <div class="char-input-wrapper">
+            <label class="char-input-label">Введите ваше имя (никнейм):</label>
+            <input type="text" class="char-input" id="charName" placeholder="CODER_21" maxlength="20">
+        </div>
+        
+        <div class="stats-distribution">
+            <div class="distribution-title">Распределите 10 очков между характеристиками:</div>
+            
+            <div class="stats-grid-creation">
+                <div class="stat-box">
+                    <div class="stat-name">ИНТЕЛЛЕКТ (INT)</div>
+                    <div class="stat-value-display" id="val-int">0</div>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-fill" id="bar-int" style="width: 0%"></div>
+                    </div>
+                    <div class="stat-controls">
+                        <button class="stat-btn" onclick="changeStat('int', -1)" id="btn-int-minus">−</button>
+                        <button class="stat-btn" onclick="changeStat('int', 1)" id="btn-int-plus">+</button>
+                    </div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-name">ХАРИЗМА (CHA)</div>
+                    <div class="stat-value-display" id="val-cha">0</div>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-fill" id="bar-cha" style="width: 0%"></div>
+                    </div>
+                    <div class="stat-controls">
+                        <button class="stat-btn" onclick="changeStat('cha', -1)" id="btn-cha-minus">−</button>
+                        <button class="stat-btn" onclick="changeStat('cha', 1)" id="btn-cha-plus">+</button>
+                    </div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-name">ВЫНОСЛИВОСТЬ (END)</div>
+                    <div class="stat-value-display" id="val-end">0</div>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-fill" id="bar-end" style="width: 0%"></div>
+                    </div>
+                    <div class="stat-controls">
+                        <button class="stat-btn" onclick="changeStat('end', -1)" id="btn-end-minus">−</button>
+                        <button class="stat-btn" onclick="changeStat('end', 1)" id="btn-end-plus">+</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="points-left">
+                Очков осталось: <span id="pointsLeft">10</span>
+            </div>
+        </div>
+        
+        <button class="start-game-btn" id="startBtn" onclick="startGame()" disabled>[ НАЧАТЬ ИГРУ ]</button>
+    </div>
 
-        const questions = [
-            {
-                title: "Утро первого дня",
-                text: "Ты заходишь в кампус. Вокруг незнакомые лица, все кажутся такими умными. Твои действия?",
-                a: "Подойти к группе и пошутить, чтобы разрядить обстановку.",
-                b: "Найти тихое место, открыть ноутбук и начать изучать локальную сеть."
-            },
-            {
-                title: "Первая задача",
-                text: "Тебе выдали задачу на C++. Компилятор выдает 15 ошибок. Дедлайн через час.",
-                a: "Попросить помощи у соседа по парте, вместе искать баг быстрее.",
-                b: "Упорно гуглить и дебажить самостоятельно, пока не получится."
-            },
-            {
-                title: "Обед в кампусе",
-                text: "Время обеда. Ты можешь пойти в столовую или остаться в коворкинге.",
-                a: "Пойти в столовую: нетворкинг и новые знакомства важнее еды.",
-                b: "Остаться за компьютером: доем сэндвич, но допишу код."
+    <!-- Game Screen with New Layout -->
+    <div id="gameScreen" class="game-layout hidden">
+        <div class="left-panel">
+            <!-- Quest Text -->
+            <div class="terminal" id="questTerminal">
+                <div id="questContent"></div>
+                <div class="choice-grid" id="choiceGrid"></div>
+                <div id="resultContainer"></div>
+            </div>
+        </div>
+        
+        <div class="right-panel">
+            <!-- Scene Illustration - No Label -->
+            <div class="illustration-container">
+                <canvas id="sceneCanvas" width="500" height="350"></canvas>
+            </div>
+            
+            <!-- Character Stats -->
+            <div class="stats-panel">
+                <div class="stats-grid" id="gameStats"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Screen - Compact -->
+    <div id="resultScreen" class="result-screen hidden">
+        <div class="result-title-large">>> ОТЧЁТ О ПРОЙДЕННОМ ДНЕ</div>
+        <div class="result-score-large" id="finalScore">0 / 100</div>
+        
+        <div class="result-content">
+            <div class="result-left">
+                <div class="quest-text" id="resultText"></div>
+                
+                <div class="leaderboard">
+                    <div class="leaderboard-title">>> ТАБЛИЦА ЛИДЕРОВ</div>
+                    <div id="leaderboardList"></div>
+                </div>
+                
+                <div class="file-controls">
+                    <button class="btn" onclick="exportLeaderboard()">[ ЭКСПОРТ JSON ]</button>
+                    <button class="btn btn-secondary" onclick="importLeaderboard()">[ ИМПОРТ JSON ]</button>
+                    <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="handleFileImport(event)">
+                    <button class="btn" onclick="downloadMeme()">[ СКАЧАТЬ МЕМ ]</button>
+                    <button class="btn btn-secondary" onclick="restartGame()">[ ЗАНОВО ]</button>
+                </div>
+            </div>
+            
+            <div class="result-right">
+                <canvas id="memeCanvas" class="result-meme" width="350" height="450"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Game State
+let gameState = {
+    name: '',
+    stats: {
+        int: 0,
+        cha: 0,
+        end: 0
+    },
+    pointsLeft: 10,
+    currentScene: 0,
+    score: 0,
+    choices: []
+};
+
+// Leaderboard storage
+let leaderboard = [];
+
+// Load leaderboard from localStorage
+function loadLeaderboard() {
+    const stored = localStorage.getItem('campus21_leaderboard');
+    if (stored) {
+        leaderboard = JSON.parse(stored);
+    }
+}
+
+// Save leaderboard to localStorage
+function saveLeaderboard() {
+    localStorage.setItem('campus21_leaderboard', JSON.stringify(leaderboard));
+}
+
+// Add player to leaderboard
+function addToLeaderboard(name, score, stats) {
+    leaderboard.push({
+        name: name,
+        score: score,
+        stats: stats,
+        date: new Date().toISOString()
+    });
+    
+    // Sort by score descending
+    leaderboard.sort((a, b) => b.score - a.score);
+    
+    // Keep only top 10
+    leaderboard = leaderboard.slice(0, 10);
+    
+    saveLeaderboard();
+}
+
+// Export leaderboard to JSON file
+function exportLeaderboard() {
+    const dataStr = JSON.stringify(leaderboard, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'campus21_leaderboard.json';
+    link.click();
+    URL.revokeObjectURL(url);
+}
+
+// Import leaderboard from JSON file
+function importLeaderboard() {
+    document.getElementById('fileInput').click();
+}
+
+function handleFileImport(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const imported = JSON.parse(e.target.result);
+                if (Array.isArray(imported)) {
+                    leaderboard = imported;
+                    saveLeaderboard();
+                    displayLeaderboard();
+                    alert('Таблица лидеров успешно загружена!');
+                }
+            } catch (err) {
+                alert('Ошибка загрузки файла!');
             }
-        ];
+        };
+        reader.readAsText(file);
+    }
+}
 
-        function showScreen(id) {
-            document.querySelectorAll('.container > div').forEach(div => div.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-        }
+// Display leaderboard
+function displayLeaderboard() {
+    const list = document.getElementById('leaderboardList');
+    if (leaderboard.length === 0) {
+        list.innerHTML = '<div style="color: var(--text-gray); text-align: center; padding: 20px;">Пока нет результатов</div>';
+        return;
+    }
+    
+    list.innerHTML = leaderboard.map((entry, index) => `
+        <div class="leaderboard-item">
+            <span class="leader-rank">#${index + 1}</span>
+            <span class="leader-name">${entry.name}</span>
+            <span class="leader-score">${entry.score} очков</span>
+        </div>
+    `).join('');
+}
 
-        function changeStat(stat, val) {
-            if (val > 0 && points > 0) { stats[stat]++; points--; }
-            else if (val < 0 && stats[stat] > 0) { stats[stat]--; points++; }
+// Quest Scenes (12 scenes for 4-5 minutes gameplay)
+const quests = [
+    {
+        title: "СЦЕНА 1: ПЕРВОЕ УТРО",
+        text: `07:30. Вы просыпаетесь в общежитии кампуса. 
+
+За окном виден современный корпус Школы 21. Сегодня первый день обучения. 
+
+В голове каша: "Найти аудиторию, не опоздать, познакомиться..."
+
+Ваши действия?`,
+        choices: [
+            { text: "Вскочить и бежать сломя голову", stat: "end", check: 4, 
+              success: "Вы домчались за 3 минуты! Кофе по пути спас ситуацию.", 
+              fail: "Вы споткнулись на лестнице. Пришли красный и запыхавшийся.",
+              score: 10 },
+            { text: "Спокойно изучить карту кампуса", stat: "int", check: 4,
+              success: "Вы нашли короткий путь через внутренний двор. Пришли первым!",
+              fail: "Карта оказалась старой. Вы заблудились и опоздали.",
+              score: 10 },
+            { text: "Написать в чат: 'Кто как идёт?'", stat: "cha", check: 4,
+              success: "Вам ответили 5 человек! Вы встретились и пошли вместе.",
+              fail: "В чате тишина. Вы пошли один, но обдумали план дня.",
+              score: 10 },
+            { text: "Позавтракать и настроиться", stat: "end", check: 3,
+              success: "Сытый и спокойный, вы уверенно начали день.",
+              fail: "Вы так долго завтракали, что почти опоздали.",
+              score: 8 }
+        ]
+    },
+    {
+        title: "СЦЕНА 2: КОФЕЙНЯ КАМПУСА",
+        text: `09:00. Вы в кофейне между парами.
+
+За соседним столом группа студентов горячо обсуждает проект на Python. 
+Пахнет свежим кофе. Слышны фразы: "алгоритмы", "дедлайн", "хакатон"...
+
+Ваши действия?`,
+        choices: [
+            { text: "Подсесть и представиться", stat: "cha", check: 4,
+              success: "Вас тепло приняли! Это команда на хакатон. Вы в деле!",
+              fail: "Ребята вежливо кивнули, но быстро свернули разговор.",
+              score: 12 },
+            { text: "Слушать и запоминать", stat: "int", check: 4,
+              success: "Вы уловили суть их проблемы. Это пригодится позже!",
+              fail: "Вы так увлеклись, что пролили кофе на руку. Ой!",
+              score: 10 },
+            { text: "Заказать двойной эспрессо", stat: "end", check: 4,
+              success: "Кофе дал энергию! Вы набросали прототип идеи.",
+              fail: "Кофе оказался слишком крепким. Руки трясутся.",
+              score: 10 },
+            { text: "Предложить помощь", stat: "cha", check: 5,
+              success: "Они искали именно вас! Вы нашли команду мечты.",
+              fail: "Они уже собрали команду. Но вы попробовали!",
+              score: 12 }
+        ]
+    },
+    {
+        title: "СЦЕНА 3: ТРЕНИРОВКА КОДИНГА",
+        text: `10:00. У вас есть свободный час до воркшопа.
+
+Вы решаете потренироваться в кодинге на платформах типа LeetCode. 
+Задача средней сложности на алгоритмы.
+
+Как будете решать?`,
+        choices: [
+            { text: "Разобрать задачу по шагам", stat: "int", check: 4,
+              success: "Системный подход сработал! Вы решили задачу за 20 минут. +1 INT",
+              fail: "Вы запутались в условиях. Пришлось смотреть решение.",
+              score: 12, statBoost: "int" },
+            { text: "Сразу писать код", stat: "int", check: 5,
+              success: "Интуиция не подвела! Код работает с первого раза. +1 INT",
+              fail: "Код не скомпилировался. Потратили время на отладку.",
+              score: 10, statBoost: "int" },
+            { text: "Попросить помощи у соседа", stat: "cha", check: 4,
+              success: "Сосед объяснил концепцию. Вы разобрались! +1 CHA",
+              fail: "Сосед был занят. Пришлось разбираться самому.",
+              score: 8, statBoost: "cha" },
+            { text: "Гуглить похожие решения", stat: "int", check: 3,
+              success: "Нашли пример! Адаптировали под задачу. +1 INT",
+              fail: "Решение не подошло. Время потеряно.",
+              score: 8, statBoost: "int" }
+        ]
+    },
+    {
+        title: "СЦЕНА 4: ВОРКШОП ПО АЛГОРИТМАМ",
+        text: `11:00. Спикер из Яндекса задаёт сложный вопрос по графам.
+
+В аудитории тишина. Все смотрят в стол. 
+Это ваш шанс проявить себя!
+
+Ваши действия?`,
+        choices: [
+            { text: "Вытянуть руку и ответить", stat: "int", check: 5,
+              success: "Вы ответили верно! Спикер кивнул: 'Хорошая мысль'.",
+              fail: "Вы запутались на полуслове. Краснеете и садитесь.",
+              score: 15 },
+            { text: "Записать вопрос на потом", stat: "end", check: 4,
+              success: "Вы разобрали задачу по шагам. Нашли элегантное решение!",
+              fail: "Вы так увлеклись записями, что пропустили половину лекции.",
+              score: 10 },
+            { text: "Шепнуть ответ соседу", stat: "cha", check: 4,
+              success: "Сосед ответил, упомянул вашу идею. Вы теперь друзья!",
+              fail: "Сосед проигнорировал. Вы остались незамеченным.",
+              score: 8 },
+            { text: "Задать уточняющий вопрос", stat: "int", check: 4,
+              success: "Вопрос был гениален! Спикер посвятил вам 5 минут.",
+              fail: "Вопрос оказался глупым. Неловкая пауза...",
+              score: 12 }
+        ]
+    },
+    {
+        title: "СЦЕНА 5: СПОРТИВНАЯ ПЕРЕМЕНКА",
+        text: `13:00. После обеда вы чувствуете усталость.
+
+Рядом с корпусом есть спортивная площадка. 
+Можно немного размяться перед следующим занятием.
+
+Что выберете?`,
+        choices: [
+            { text: "Пробежка вокруг кампуса", stat: "end", check: 4,
+              success: "Отличная пробежка! Энергия вернулась. +1 END",
+              fail: "Вы слишком устали. Пробежка далась тяжело.",
+              score: 10, statBoost: "end" },
+            { text: "Упражнения на турнике", stat: "end", check: 5,
+              success: "Показали класс! Собрали небольшую аудиторию. +1 END",
+              fail: "Руки ослабли. Не смогли подтянуться.",
+              score: 8, statBoost: "end" },
+            { text: "Йога на свежем воздухе", stat: "end", check: 3,
+              success: "Отличная разминка! Голова прояснилась. +1 END",
+              fail: "Не смогли сосредоточиться. Отвлекли посторонние.",
+              score: 8, statBoost: "end" },
+            { text: "Настольный теннис с однокурсником", stat: "cha", check: 4,
+              success: "Весёлая игра! Познакомились поближе. +1 CHA",
+              fail: "Проиграли все партии. Настроение упало.",
+              score: 10, statBoost: "cha" }
+        ]
+    },
+    {
+        title: "СЦЕНА 6: КОД-СЕССИЯ",
+        text: `14:00. Вам дали задачу: написать функцию для парсинга данных.
+
+Сложная задача. Скрытые edge-cases. Дедлайн через час.
+Ментор ходит между рядами.
+
+Как действуете?`,
+        choices: [
+            { text: "Писать быстро, на интуиции", stat: "int", check: 5,
+              success: "Код заработал с первого запуска! Ментор удивлён.",
+              fail: "Код упал на третьем тесте. Пришлось переписывать с нуля.",
+              score: 15 },
+            { text: "Написать тесты сначала", stat: "int", check: 6,
+              success: "Вы нашли все edge-cases! Идеальное решение.",
+              fail: "Вы так углубились в тесты, что не успели написать код.",
+              score: 15 },
+            { text: "Попросить подсказку", stat: "cha", check: 4,
+              success: "Ментор дал намёк. Вы дописали задачу за 10 минут!",
+              fail: "Ментор был занят. Вы потеряли время, ожидая ответа.",
+              score: 10 },
+            { text: "Разобрать по шагам", stat: "int", check: 5,
+              success: "Системный подход сработал! Вы сдали решение первым.",
+              fail: "Анализ занял слишком много времени. Вы не успели.",
+              score: 12 }
+        ]
+    },
+    {
+        title: "СЦЕНА 7: МАСТЕР-КЛАСС ПО GIT",
+        text: `16:00. Проходит мастер-класс по работе с Git.
+
+Преподаватель показывает сложные команды: rebase, cherry-pick, bisect.
+Нужно повторить всё на своём ноутбуке.
+
+Как справляетесь?`,
+        choices: [
+            { text: "Внимательно конспектировать", stat: "int", check: 4,
+              success: "Записали все команды! Разберётесь потом. +1 INT",
+              fail: "Не успевали за темпом. Много пропустили.",
+              score: 10, statBoost: "int" },
+            { text: "Сразу практиковаться", stat: "int", check: 5,
+              success: "Отлично! Все команды запомнились. +1 INT",
+              fail: "Сделали ошибку и потеряли изменения.",
+              score: 12, statBoost: "int" },
+            { text: "Помочь отстающему соседу", stat: "cha", check: 4,
+              success: "Объяснили понятно! Теперь вы оба разобрались. +1 CHA",
+              fail: "Запутали ещё больше. Оба ничего не поняли.",
+              score: 10, statBoost: "cha" },
+            { text: "Снять видео на телефон", stat: "int", check: 3,
+              success: "Отличная идея! Сможете пересмотреть. +1 INT",
+              fail: "Видео вышло нечётким. Ничего не видно.",
+              score: 8, statBoost: "int" }
+        ]
+    },
+    {
+        title: "СЦЕНА 8: ОБЕД В СТОЛОВОЙ",
+        text: `17:00. Вы берёте поднос и ищете место.
+
+За свободным столом сидят ребята с другого факультета. 
+Они обсуждают VR-проект. Вы голодный, но нерешительный.
+
+Ваши действия?`,
+        choices: [
+            { text: "Сесть и начать разговор", stat: "cha", check: 4,
+              success: "Вас втянули в дискуссию! Им нужен фронтендер — это вы!",
+              fail: "Ребята ответили вежливо, но быстро вернулись к своему.",
+              score: 12 },
+            { text: "Сесть и слушать", stat: "int", check: 4,
+              success: "Вы услышали ключевую идею проекта. Запомнили!",
+              fail: "Вы так заслушался, что съел чужой десерт. Неловко.",
+              score: 10 },
+            { text: "Предложить помощь с кодом", stat: "int", check: 5,
+              success: "Вы нашли баг в их прототипе за 5 минут! Вы герой.",
+              fail: "Ваше решение не подошло. Пришлось долго объясняться.",
+              score: 12 },
+            { text: "Поесть в тишине", stat: "end", check: 3,
+              success: "Спокойный обед восстановил силы. Вы готовы к вечеру!",
+              fail: "Вы ели слишком быстро. Живот недоволен.",
+              score: 6 }
+        ]
+    },
+    {
+        title: "СЦЕНА 9: ПОДГОТОВКА К ХАКАТОНУ",
+        text: `18:00. Завтра большой хакатон!
+
+Нужно подготовиться: изучить технологии, найти команду, придумать идею.
+Времени мало, задач много.
+
+За что возьмётесь primero?`,
+        choices: [
+            { text: "Изучить новый фреймворк", stat: "int", check: 5,
+              success: "Быстро разобрались! Теперь вы в теме. +1 INT",
+              fail: "Документация оказалась сложной. Ничего не поняли.",
+              score: 12, statBoost: "int" },
+            { text: "Искать команду в чатах", stat: "cha", check: 4,
+              success: "Нашли отличную команду! Все профи. +1 CHA",
+              fail: "Все команды уже собраны. Придётся идти к новичкам.",
+              score: 10, statBoost: "cha" },
+            { text: "Придумать 10 идей проекта", stat: "int", check: 4,
+              success: "Отличный мозговой штурм! Выбрали лучшую. +1 INT",
+              fail: "Все идеи оказались банальными. Придётся думать ещё.",
+              score: 10, statBoost: "int" },
+            { text: "Отдохнуть и выспаться", stat: "end", check: 4,
+              success: "Мудрое решение! Завтра будете полны сил. +1 END",
+              fail: "Не смогли уснуть. Переживали о хакатоне.",
+              score: 8, statBoost: "end" }
+        ]
+    },
+    {
+        title: "СЦЕНА 10: МИНИ-ХАКАТОН",
+        text: `19:00. Объявили мини-хакатон!
+
+Тема: 'Образовательная платформа будущего'.
+Нужно собрать команду за 5 минут. 
+Призы — мерч Школы 21 и стажировка.
+
+Ваши действия?`,
+        choices: [
+            { text: "Подойти к опытным ребятам", stat: "cha", check: 5,
+              success: "Вы убедили их взять вас! Команда — огонь!",
+              fail: "Опытные уже собрались. Вы остались без команды.",
+              score: 15 },
+            { text: "Собрать новичков", stat: "cha", check: 4,
+              success: "Вы работали дружно! Результат удивил жюри.",
+              fail: "Команда развалилась на полпути. Вы доделывали один.",
+              score: 12 },
+            { text: "Работать в одиночку", stat: "int", check: 6,
+              success: "Вы сделали невозможное! Один за всех. Приз!",
+              fail: "Вы не успели. Проект получился сырым.",
+              score: 15 },
+            { text: "Найти ментора", stat: "cha", check: 5,
+              success: "Ментор присоединился! Его опыт помог победить.",
+              fail: "Ментор был занят. Вы искали слишком долго.",
+              score: 12 }
+        ]
+    },
+    {
+        title: "СЦЕНА 11: ВЕЧЕРНИЙ КОДИНГ",
+        text: `20:30. После хакатона вы решаете поработать над личным проектом.
+
+Нужно доделать функционал, который откладывали.
+Усталость даёт о себе знать, но работа горит.
+
+Как поступите?`,
+        choices: [
+            { text: "Работать до победного", stat: "end", check: 5,
+              success: "Закончили! Усталость, но довольны. +1 END",
+              fail: "Уснули за клавиатурой. Код не сохранён.",
+              score: 12, statBoost: "end" },
+            { text: "Сделать только самое важное", stat: "int", check: 4,
+              success: "Разумный подход! Главное сделано. +1 INT",
+              fail: "Не смогли расставить приоритеты. Сделали ерунду.",
+              score: 10, statBoost: "int" },
+            { text: "Попросить код-ревью у друга", stat: "cha", check: 4,
+              success: "Друг нашёл ошибки! Код стал лучше. +1 CHA",
+              fail: "Друг был слишком критичен. Обиделись друг на друга.",
+              score: 10, statBoost: "cha" },
+            { text: "Отложить на завтра", stat: "end", check: 3,
+              success: "Правильное решение! Отдохнули и завтра сделали лучше. +1 END",
+              fail: "Всю ночь переживали о проекте. Не выспались.",
+              score: 8, statBoost: "end" }
+        ]
+    },
+    {
+        title: "СЦЕНА 12: ФИНАЛЬНАЯ ПРЕЗЕНТАЦИЯ",
+        text: `21:00. Ваша команда выходит презентовать проект.
+
+В зале — жюри, менторы, другие участники. 
+Все смотрят на вас. Последний шанс дня!
+
+Ваши действия?`,
+        choices: [
+            { text: "Говорить с юмором", stat: "cha", check: 5,
+              success: "Зал смеётся, жюри кивает. Standing ovation!",
+              fail: "Шутка не зашла. Неловкая пауза. Но проект хороший.",
+              score: 15 },
+            { text: "Показать техническую часть", stat: "int", check: 6,
+              success: "Жюри-разработчики в восторге! Лучшая реализация!",
+              fail: "Вы ушли в дебри. Половина зала перестала понимать.",
+              score: 15 },
+            { text: "Импровизировать", stat: "cha", check: 5,
+              success: "Ваши слова тронули всех! Специальный приз!",
+              fail: "Вы забыли слова. Тишина. Но кто-то начал аплодировать.",
+              score: 12 },
+            { text: "Читать с листа", stat: "end", check: 4,
+              success: "Вы чётко рассказали всё по плану. Профессионально!",
+              fail: "Вы читали монотонно. Зал заскучал.",
+              score: 8 }
+        ]
+    }
+];
+
+// Navigation Functions
+function goToCharCreation() {
+    document.getElementById('startScreen').classList.add('hidden');
+    document.getElementById('charScreen').classList.remove('hidden');
+    document.getElementById('charScreen').classList.add('fade-in');
+}
+
+function showInfo() {
+    alert("Центр прикладного программирования — это совместный кампус РУДН и Школы 21.\n\nЗдесь вы получите современное IT-образование, поработаете над реальными проектами и найдёте друзей!");
+}
+
+// Character Stats
+function changeStat(stat, delta) {
+    if (delta > 0 && gameState.pointsLeft <= 0) return;
+    if (delta < 0 && gameState.stats[stat] <= 0) return;
+    
+    gameState.stats[stat] += delta;
+    gameState.pointsLeft -= delta;
+    
+    updateStatDisplay(stat);
+    updatePointsLeft();
+    updateButtons();
+    checkStartButton();
+}
+
+function updateStatDisplay(stat) {
+    const value = gameState.stats[stat];
+    document.getElementById(`val-${stat}`).textContent = value;
+    document.getElementById(`bar-${stat}`).style.width = (value * 10) + '%';
+}
+
+function updatePointsLeft() {
+    document.getElementById('pointsLeft').textContent = gameState.pointsLeft;
+}
+
+function updateButtons() {
+    ['int', 'cha', 'end'].forEach(stat => {
+        document.getElementById(`btn-${stat}-minus`).disabled = gameState.stats[stat] <= 0;
+        document.getElementById(`btn-${stat}-plus`).disabled = gameState.pointsLeft <= 0;
+    });
+}
+
+function checkStartButton() {
+    document.getElementById('startBtn').disabled = gameState.pointsLeft !== 0;
+}
+
+// Game Functions
+function startGame() {
+    gameState.name = document.getElementById('charName').value || 'CODER_21';
+    gameState.currentScene = 0;
+    gameState.score = 0;
+    gameState.choices = [];
+    
+    document.getElementById('charScreen').classList.add('hidden');
+    document.getElementById('gameScreen').classList.remove('hidden');
+    document.getElementById('gameScreen').classList.add('fade-in');
+    
+    renderStats();
+    renderScene();
+}
+
+function renderStats() {
+    const statsDiv = document.getElementById('gameStats');
+    statsDiv.innerHTML = `
+        <div class="stat-item">
+            <div class="stat-header">
+                <div class="stat-label">ИГРОК: ${gameState.name}</div>
+            </div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-header">
+                <div class="stat-label">ИНТЕЛЛЕКТ</div>
+                <div class="stat-value" id="sv-int">${gameState.stats.int}</div>
+            </div>
+            <div class="stat-bar"><div class="stat-fill" style="width: ${gameState.stats.int * 10}%"></div></div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-header">
+                <div class="stat-label">ХАРИЗМА</div>
+                <div class="stat-value" id="sv-cha">${gameState.stats.cha}</div>
+            </div>
+            <div class="stat-bar"><div class="stat-fill" style="width: ${gameState.stats.cha * 10}%"></div></div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-header">
+                <div class="stat-label">ВЫНОСЛИВОСТЬ</div>
+                <div class="stat-value" id="sv-end">${gameState.stats.end}</div>
+            </div>
+            <div class="stat-bar"><div class="stat-fill" style="width: ${gameState.stats.end * 10}%"></div></div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-header">
+                <div class="stat-label">СЧЁТ</div>
+                <div class="stat-value" style="color: var(--amber);">${gameState.score}</div>
+            </div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-header">
+                <div class="stat-label">СЦЕНА</div>
+                <div class="stat-value">${gameState.currentScene + 1}/${quests.length}</div>
+            </div>
+        </div>
+    `;
+}
+
+function renderScene() {
+    const quest = quests[gameState.currentScene];
+    const contentDiv = document.getElementById('questContent');
+    const gridDiv = document.getElementById('choiceGrid');
+    const resultContainer = document.getElementById('resultContainer');
+    
+    contentDiv.innerHTML = `
+        <div class="quest-title">${quest.title}</div>
+        <div class="quest-text">${quest.text}</div>
+    `;
+    
+    gridDiv.innerHTML = '';
+    quest.choices.forEach((choice, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.innerHTML = `
+            <span class="choice-number">${index + 1}</span>
+            <span>${choice.text}</span>
+            <span class="choice-stat">${choice.stat.toUpperCase()}: ${choice.check}</span>
+        `;
+        btn.onclick = () => makeChoice(index);
+        gridDiv.appendChild(btn);
+    });
+    
+    resultContainer.innerHTML = '';
+    
+    // Draw scene illustration
+    drawSceneIllustration(gameState.currentScene);
+    renderStats();
+}
+
+function makeChoice(choiceIndex) {
+    const quest = quests[gameState.currentScene];
+    const choice = quest.choices[choiceIndex];
+    
+    // Check stat
+    const statValue = gameState.stats[choice.stat];
+    const success = statValue >= choice.check || Math.random() > 0.6;
+    
+    // Update score
+    gameState.score += success ? choice.score : Math.floor(choice.score * 0.4);
+    
+    // Update stats if there's a boost
+    if (choice.statBoost) {
+        gameState.stats[choice.statBoost]++;
+    }
+    
+    gameState.choices.push({
+        scene: gameState.currentScene,
+        choice: choiceIndex,
+        success: success
+    });
+    
+    // Show result
+    showResult(choice, success);
+}
+
+function showResult(choice, success) {
+    const resultContainer = document.getElementById('resultContainer');
+    
+    resultContainer.innerHTML = `
+        <div class="result-box ${success ? 'success' : 'fail'}">
+            <div class="result-title">${success ? '>> УСПЕХ' : '>> НЕУДАЧА'}</div>
+            <div class="result-text">${success ? choice.success : choice.fail}</div>
+            <div class="result-points">+${success ? choice.score : Math.floor(choice.score * 0.4)} очков</div>
+            ${choice.statBoost ? `<div class="result-stat-boost">+1 ${choice.statBoost.toUpperCase()}</div>` : ''}
+        </div>
+    `;
+    
+    // Disable all buttons
+    document.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = true);
+    
+    // Update stats display
+    renderStats();
+    
+    // Next button
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn';
+    nextBtn.style.marginTop = '15px';
+    nextBtn.style.width = '100%';
+    nextBtn.textContent = gameState.currentScene < quests.length - 1 ? '>> СЛЕДУЮЩАЯ СЦЕНА' : '>> ЗАВЕРШИТЬ ИГРУ';
+    nextBtn.onclick = nextScene;
+    resultContainer.appendChild(nextBtn);
+}
+
+function nextScene() {
+    gameState.currentScene++;
+    
+    if (gameState.currentScene >= quests.length) {
+        showResults();
+    } else {
+        renderScene();
+    }
+}
+
+function showResults() {
+    document.getElementById('gameScreen').classList.add('hidden');
+    document.getElementById('resultScreen').classList.remove('hidden');
+    document.getElementById('resultScreen').classList.add('fade-in');
+    
+    const maxScore = quests.reduce((sum, q) => sum + Math.max(...q.choices.map(c => c.score)), 0);
+    const percentage = Math.floor((gameState.score / maxScore) * 100);
+    
+    document.getElementById('finalScore').textContent = `${gameState.score} / ${maxScore} (${percentage}%)`;
+    
+    let rank, text;
+    if (percentage < 40) {
+        rank = "НОВИЧОК";
+        text = "Вы выжили, но кампус запомнил вас как скромного новичка. В следующий раз будьте смелее!";
+    } else if (percentage < 60) {
+        rank = "ПЕРСПЕКТИВНЫЙ СТУДЕНТ";
+        text = "Неплохой день! Вы нашли друзей и показали себя. Вас ждут на следующих мероприятиях.";
+    } else if (percentage < 80) {
+        rank = "ЗВЕЗДА КАМПУСА";
+        text = "Отличный результат! Вы в центре внимания, менторы зовут на стажировку. Так держать!";
+    } else {
+        rank = "ЛЕГЕНДА ШКОЛЫ 21 × РУДН";
+        text = "Вы — легенда! О вас будут рассказывать новичкам. Вас уже ждут на следующем хакатоне в роли ментора.";
+    }
+    
+    document.getElementById('resultText').innerHTML = `
+        <div style="color: var(--amber); font-size: 20px; margin: 10px 0; font-weight: bold;">РАНГ: ${rank}</div>
+        <div style="font-size: 14px;">${text}</div>
+        <div style="margin-top: 10px; color: var(--text-gray); font-size: 12px;">
+            ИТОГОВЫЕ ХАРАКТЕРИСТИКИ:<br>
+            INT: ${gameState.stats.int} | CHA: ${gameState.stats.cha} | END: ${gameState.stats.end}
+        </div>
+    `;
+    
+    // Add to leaderboard
+    addToLeaderboard(gameState.name, gameState.score, gameState.stats);
+    
+    // Display leaderboard
+    displayLeaderboard();
+    
+    drawMeme(rank, percentage);
+}
+
+// Canvas Drawing Functions - Enhanced
+function drawSceneIllustration(sceneIndex) {
+    const canvas = document.getElementById('sceneCanvas');
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, w, h);
+    
+    // Background
+    const bgGradient = ctx.createLinearGradient(0, 0, 0, h);
+    bgGradient.addColorStop(0, '#1a1f2a');
+    bgGradient.addColorStop(1, '#101518');
+    ctx.fillStyle = bgGradient;
+    ctx.fillRect(0, 0, w, h);
+    
+    // Draw different scenes
+    switch(sceneIndex) {
+        case 0: drawMorningScene(ctx, w, h); break;
+        case 1: drawCoffeeScene(ctx, w, h); break;
+        case 2: drawCodingScene(ctx, w, h); break;
+        case 3: drawWorkshopScene(ctx, w, h); break;
+        case 4: drawSportScene(ctx, w, h); break;
+        case 5: drawCodeSessionScene(ctx, w, h); break;
+        case 6: drawGitScene(ctx, w, h); break;
+        case 7: drawLunchScene(ctx, w, h); break;
+        case 8: drawHackathonPrepScene(ctx, w, h); break;
+        case 9: drawHackathonScene(ctx, w, h); break;
+        case 10: drawEveningCodeScene(ctx, w, h); break;
+        case 11: drawPresentationScene(ctx, w, h); break;
+    }
+}
+
+function drawMorningScene(ctx, w, h) {
+    // Sky gradient
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+    skyGrad.addColorStop(0, '#1a1f3a');
+    skyGrad.addColorStop(1, '#2d3561');
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, w, h);
+    
+    // Sun with glow
+    ctx.shadowColor = '#FFB305';
+    ctx.shadowBlur = 30;
+    ctx.fillStyle = '#FFB305';
+    ctx.beginPath();
+    ctx.arc(w - 70, 60, 40, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    
+    // Dormitory building (detailed)
+    drawDetailedBuilding(ctx, 30, 150, 160, 180, '#1D2633', '#44EB99');
+    
+    // School 21 building
+    drawDetailedBuilding(ctx, 220, 100, 200, 230, '#1D2633', '#861BE3');
+    
+    // Running student
+    drawRunningPerson(ctx, 140, 300, '#861BE3');
+    
+    // Digital clock
+    drawDigitalClock(ctx, 50, 40, '07:30');
+    
+    // Campus sign
+    ctx.fillStyle = '#44EB99';
+    ctx.font = 'bold 14px Share Tech Mono';
+    ctx.fillText('КАМПУС 21', 40, 140);
+}
+
+function drawCoffeeScene(ctx, w, h) {
+    // Coffee shop interior
+    ctx.fillStyle = '#1D2633';
+    ctx.fillRect(0, 0, w, h);
+    
+    // Counter with gradient
+    const counterGrad = ctx.createLinearGradient(50, 220, 50, 320);
+    counterGrad.addColorStop(0, '#2a3551');
+    counterGrad.addColorStop(1, '#1D2633');
+    ctx.fillStyle = counterGrad;
+    ctx.fillRect(50, 220, 400, 100);
+    ctx.strokeStyle = '#44EB99';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(50, 220, 400, 100);
+    
+    // Coffee machines (3 detailed)
+    for (let i = 0; i < 3; i++) {
+        const x = 90 + i * 110;
+        // Machine body
+        ctx.fillStyle = '#C6CFDA';
+        ctx.fillRect(x, 150, 65, 70);
+        ctx.strokeStyle = '#44EB99';
+        ctx.strokeRect(x, 150, 65, 70);
+        // Screen
+        ctx.fillStyle = '#44EB99';
+        ctx.fillRect(x + 10, 160, 45, 25);
+        // Buttons
+        ctx.fillStyle = '#861BE3';
+        ctx.fillRect(x + 15, 195, 12, 12);
+        ctx.fillRect(x + 32, 195, 12, 12);
+    }
+    
+    // Coffee cups with steam
+    drawCoffeeCupWithSteam(ctx, 140, 260);
+    drawCoffeeCupWithSteam(ctx, 270, 260);
+    drawCoffeeCupWithSteam(ctx, 400, 260);
+    
+    // People at tables
+    drawDetailedPerson(ctx, 110, 310, '#861BE3');
+    drawDetailedPerson(ctx, 290, 310, '#44EB99');
+    drawDetailedPerson(ctx, 440, 310, '#FFB305');
+    
+    // Laptop on table
+    drawDetailedLaptop(ctx, 350, 190, 0.7);
+    
+    // Menu board
+    ctx.fillStyle = '#1D2633';
+    ctx.fillRect(380, 60, 100, 70);
+    ctx.strokeStyle = '#FFB305';
+    ctx.strokeRect(380, 60, 100, 70);
+    ctx.fillStyle = '#FFB305';
+    ctx.font = '10px Share Tech Mono';
+    ctx.fillText('МЕНЮ', 405, 80);
+    ctx.fillText('Эспрессо', 390, 95);
+    ctx.fillText('Капучино', 390, 110);
+}
+
+function drawCodingScene(ctx, w, h) {
+    // Dark coding environment
+    ctx.fillStyle = '#0a0f18';
+    ctx.fillRect(0, 0, w, h);
+    
+    // Large laptop
+    drawDetailedLaptop(ctx, 200, 200, 1.3);
+    
+    // Code on screen (detailed)
+    ctx.fillStyle = '#44EB99';
+    ctx.font = '11px Share Tech Mono';
+    ctx.fillText('// LeetCode Problem #42', 180, 185);
+    ctx.fillText('function trap(height) {', 180, 200);
+    ctx.fillText('  let left = 0;', 190, 215);
+    ctx.fillText('  let right = height.length - 1;', 190, 230);
+    ctx.fillText('  // Two pointers', 190, 245);
+    ctx.fillText('}', 180, 260);
+    
+    // Person coding
+    drawDetailedPerson(ctx, 200, 300, '#861BE3');
+    
+    // Clock
+    drawDigitalClock(ctx, 40, 40, '10:00');
+    
+    // Code brackets decoration
+    ctx.fillStyle = '#861BE3';
+    ctx.font = 'bold 50px Share Tech Mono';
+    ctx.fillText('{ }', 420, 70);
+    
+    // Algorithm diagram
+    ctx.strokeStyle = '#44EB99';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(420, 120);
+    ctx.lineTo(450, 140);
+    ctx.lineTo(435, 160);
+    ctx.lineTo(465, 180);
+    ctx.stroke();
+}
+
+function drawWorkshopScene(ctx, w, h) {
+    // Auditorium
+    ctx.fillStyle = '#1D2633';
+    ctx.fillRect(0, 0, w, h);
+    
+    // Large presentation screen
+    ctx.fillStyle = '#0a0f18';
+    ctx.fillRect(140, 30, 320, 200);
+    ctx.strokeStyle = '#44EB99';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(140, 30, 320, 200);
+    
+    // Graph visualization on screen
+    ctx.strokeStyle = '#861BE3';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(180, 100);
+    ctx.lineTo(250, 140);
+    ctx.lineTo(330, 110);
+    ctx.lineTo(400, 160);
+    ctx.stroke();
+    
+    // Graph nodes with glow
+    ctx.shadowColor = '#44EB99';
+    ctx.shadowBlur = 10;
+    ctx.fillStyle = '#44EB99';
+    [180, 250, 330, 400].forEach((x, i) => {
+        const y = [100, 140, 110, 160][i];
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fill();
+    });
+    ctx.shadowBlur = 0;
+    
+    // Speaker at podium
+    drawDetailedPerson(ctx, 90, 260, '#FFB305', 1.3);
+    ctx.fillStyle = '#2a3551';
+    ctx.fillRect(70, 260, 40, 60);
+    
+    // Audience (5 people)
+    for (let i = 0; i < 5; i++) {
+        drawDetailedPerson(ctx, 240 + i * 65, 290, '#C6CFDA', 0.8);
+    }
+    
+    // Yandex logo
+    ctx.fillStyle = '#FFB305';
+    ctx.font = 'bold 12px Share Tech Mono';
+    ctx.fillText('YANDEX', 160, 245);
+}
+
+function drawSportScene(ctx, w, h) {
+    // Outdoor scene
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+    skyGrad.addColorStop(0, '#2d3561');
+    skyGrad.addColorStop(1, '#1a1f3a');
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, w, h);
+    
+    // Ground
+    ctx.fillStyle = '#1D2633';
+    ctx.fillRect(0, 280, w, 70);
+    
+    // Running person
+    drawRunningPerson(ctx, 100, 260, '#44EB99');
+    
+    // Pull-up bar with person
+    ctx.strokeStyle = '#C6CFDA';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(250, 200);
+    ctx.lineTo(330, 200);
+    ctx.stroke();
+    // Supports
+    ctx.beginPath();
+    ctx.moveTo(250, 200);
+    ctx.lineTo(250, 280);
+    ctx.moveTo(330, 200);
+    ctx.lineTo(330, 280);
+    ctx.stroke();
+    // Person doing pull-ups
+    drawPullupPerson(ctx, 290, 200, '#861BE3');
+    
+    // Yoga person
+    drawYogaPerson(ctx, 420, 270, '#FFB305');
+    
+    // Sun
+    ctx.shadowColor = '#FFB305';
+    ctx.shadowBlur = 20;
+    ctx.fillStyle = '#FFB305';
+    ctx.beginPath();
+    ctx.arc(w - 60, 60, 35, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    
+    // Trees
+    drawTree(ctx, 30, 200);
+    drawTree(ctx, 470, 220);
+}
+
+function drawCodeSessionScene(ctx, w, h) {
+    // Intense coding environment
+    ctx.fillStyle = '#0a0f18';
+    ctx.fillRect(0, 0, w, h);
+    
+    // Multiple laptops
+    drawDetailedLaptop(ctx, 90, 180, 1);
+    drawDetailedLaptop(ctx, 250, 160, 0.9);
+    drawDetailedLaptop(ctx, 390, 200, 0.85);
+    
+    // Code on screens
+    ctx.fillStyle = '#44EB99';
+    ctx.font = '9px Share Tech Mono';
+    ctx.fillText('function parse() {', 75, 165);
+    ctx.fillText('const data =', 235, 150);
+    ctx.fillText('if (error) {', 375, 190);
+    
+    // People coding intensely
+    drawDetailedPerson(ctx, 90, 280, '#861BE3');
+    drawDetailedPerson(ctx, 260, 260, '#44EB99');
+    drawDetailedPerson(ctx, 400, 300, '#FFB305');
+    
+    // Deadline indicator with glow
+    ctx.shadowColor = '#FF4A50';
+    ctx.shadowBlur = 15;
+    ctx.fillStyle = '#FF4A50';
+    ctx.font = 'bold 16px Share Tech Mono';
+    ctx.fillText('⏰ DEADLINE', 30, 40);
+    ctx.fillStyle = '#FFB305';
+    ctx.fillText('1 ЧАС', 30, 62);
+    ctx.shadowBlur = 0;
+    
+    // Coffee cups
+    drawCoffeeCupWithSteam(ctx, 190, 310);
+    drawCoffeeCupWithSteam(ctx, 350, 330);
+    
+    // Clock
+    drawDigitalClock(ctx, 420, 30, '14:00');
+}
+
+function drawGitScene(ctx, w, h) {
+    // Terminal environment
+    ctx.fillStyle = '#0a0f18';
+    ctx.fillRect(0, 0, w, h);
+    
+    // Large laptop
+    drawDetailedLaptop(ctx, 180, 190, 1.2);
+    
+    // Git commands on screen
+    ctx.fillStyle = '#44EB99';
+    ctx.font = '10px Share Tech Mono';
+    ctx.fillText('$ git rebase -i HEAD~3', 165, 175);
+    ctx.fillText('$ git cherry-pick abc123', 165, 190);
+    ctx.fillText('$ git bisect start', 165, 205);
+    ctx.fillText('$ git commit -m "fix"', 165, 220);
+    ctx.fillText('$ git push origin', 165, 235);
+    
+    // Person
+    drawDetailedPerson(ctx, 190, 300, '#861BE3');
+    
+    // Git branch visualization
+    ctx.strokeStyle = '#861BE3';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(400, 100);
+    ctx.lineTo(420, 120);
+    ctx.lineTo(440, 100);
+    ctx.lineTo(460, 120);
+    ctx.stroke();
+    
+    // Git nodes
+    ctx.fillStyle = '#44EB99';
+    [400, 420, 440, 460].forEach((x, i) => {
+        const y = i % 2 === 0 ? 100 : 120;
+        ctx.beginPath();
+        ctx.arc(x, y, 6, 0, Math.PI * 2);
+        ctx.fill();
+    });
+    
+    // Git logo
+    ctx.fillStyle = '#FF4A50';
+    ctx.font = 'bold 14px Share Tech Mono';
+    ctx.fillText('GIT', 410, 160);
+}
+
+function drawLunchScene(ctx, w, h) {
+    // Cafeteria
+    ctx.fillStyle = '#1D2633';
+    ctx.fillRect(0, 0, w, h);
+    
+    // Tables (3 detailed)
+    for (let i = 0; i < 3; i++) {
+        const x = 50 + i * 170;
+        // Table
+        ctx.fillStyle = '#2a3551';
+        ctx.fillRect(x, 180, 130, 80);
+        ctx.strokeStyle = '#44EB99';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x, 180, 130, 80);
+        // Legs
+        ctx.fillRect(x + 10, 260, 8, 40);
+        ctx.fillRect(x + 112, 260, 8, 40);
+    }
+    
+    // Food trays
+    drawFoodTray(ctx, 85, 200);
+    drawFoodTray(ctx, 255, 195);
+    drawFoodTray(ctx, 425, 200);
+    
+    // People
+    drawDetailedPerson(ctx, 115, 300, '#861BE3');
+    drawDetailedPerson(ctx, 285, 300, '#44EB99');
+    drawDetailedPerson(ctx, 455, 300, '#FFB305');
+    
+    // Cafeteria counter
+    ctx.fillStyle = '#1D2633';
+    ctx.fillRect(30, 70, 470, 60);
+    ctx.strokeStyle = '#861BE3';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(30, 70, 470, 60);
+    
+    // Food display
+    ctx.fillStyle = '#FFB305';
+    ctx.font = '12px Share Tech Mono';
+    ctx.fillText('СТОЛОВАЯ', 220, 105);
+}
+
+function drawHackathonPrepScene(ctx, w, h) {
+    // Preparation scene
+    ctx.fillStyle = '#1a1f2a';
+    ctx.fillRect(0, 0, w, h);
+    
+    // Multiple screens
+    drawDetailedLaptop(ctx, 70, 170, 0.9);
+    drawDetailedLaptop(ctx, 230, 150, 1);
+    drawDetailedLaptop(ctx, 380, 190, 0.85);
+    
+    // Code on screens
+    ctx.fillStyle = '#44EB99';
+    ctx.font = '9px Share Tech Mono';
+    ctx.fillText('React', 60, 155);
+    ctx.fillText('Team Chat', 220, 135);
+    ctx.fillText('Ideas: 10', 370, 180);
+    
+    // People
+    drawDetailedPerson(ctx, 70, 280, '#861BE3');
+    drawDetailedPerson(ctx, 240, 260, '#44EB99');
+    drawDetailedPerson(ctx, 390, 300, '#FFB305');
+    
+    // Clock
+    drawDigitalClock(ctx, 40, 40, '18:00');
+    
+    // Light bulb (idea)
+    ctx.shadowColor = '#FFB305';
+    ctx.shadowBlur = 15;
+    ctx.fillStyle = '#FFB305';
+    ctx.beginPath();
+    ctx.arc(450, 80, 20, 0, Math.PI * 2);
+    ctx.fill();
+    // Bulb filament
+    ctx.strokeStyle = '#1a1f2a';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(445, 75);
+    ctx.lineTo(450, 85);
+    ctx.lineTo(455, 75);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+}
+
+function drawHackathonScene(ctx, w, h) {
+    // Hackathon atmosphere
+    const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+    bgGrad.addColorStop(0, '#2a1f3a');
+    bgGrad.addColorStop(1, '#1a1f2a');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, w, h);
+    
+    // Team tables (2x2)
+    for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 2; j++) {
+            const x = 70 + i * 230;
+            const y = 120 + j * 120;
+            // Table
+            ctx.fillStyle = '#1D2633';
+            ctx.fillRect(x, y, 180, 90);
+            ctx.strokeStyle = '#861BE3';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, 180, 90);
             
-            document.getElementById('val-int').innerText = stats.int;
-            document.getElementById('val-cha').innerText = stats.cha;
-            document.getElementById('val-end').innerText = stats.end;
-            document.getElementById('points-left').innerText = points;
+            // Laptops
+            drawDetailedLaptop(ctx, x + 40, y + 20, 0.6);
+            drawDetailedLaptop(ctx, x + 120, y + 20, 0.6);
             
-            document.getElementById('start-btn').disabled = (points !== 0);
+            // People
+            drawDetailedPerson(ctx, x + 35, y + 110, '#44EB99', 0.7);
+            drawDetailedPerson(ctx, x + 125, y + 110, '#FFB305', 0.7);
         }
+    }
+    
+    // Timer with glow
+    ctx.shadowColor = '#FF4A50';
+    ctx.shadowBlur = 15;
+    ctx.fillStyle = '#1D2633';
+    ctx.fillRect(390, 15, 120, 50);
+    ctx.strokeStyle = '#FF4A50';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(390, 15, 120, 50);
+    ctx.fillStyle = '#FF4A50';
+    ctx.font = 'bold 20px Share Tech Mono';
+    ctx.fillText('02:15', 405, 47);
+    ctx.shadowBlur = 0;
+    
+    // Energy lines
+    ctx.strokeStyle = 'rgba(68, 235, 153, 0.3)';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 8; i++) {
+        ctx.beginPath();
+        ctx.moveTo(Math.random() * w, Math.random() * h);
+        ctx.lineTo(Math.random() * w, Math.random() * h);
+        ctx.stroke();
+    }
+}
 
-        function startGame() {
-            playerName = document.getElementById('player-name').value || "Аноним";
-            currentQ = 0;
-            showScreen('screen-game');
-            renderQuestion();
+function drawEveningCodeScene(ctx, w, h) {
+    // Night coding
+    const nightGrad = ctx.createLinearGradient(0, 0, 0, h);
+    nightGrad.addColorStop(0, '#0a0f18');
+    nightGrad.addColorStop(1, '#1a1f3a');
+    ctx.fillStyle = nightGrad;
+    ctx.fillRect(0, 0, w, h);
+    
+    // Laptop
+    drawDetailedLaptop(ctx, 210, 190, 1.2);
+    
+    // Code
+    ctx.fillStyle = '#44EB99';
+    ctx.font = '10px Share Tech Mono';
+    ctx.fillText('// Personal project', 190, 175);
+    ctx.fillText('function feature() {', 190, 190);
+    ctx.fillText('  // TODO: implement', 200, 205);
+    ctx.fillText('  return result;', 200, 220);
+    ctx.fillText('}', 190, 235);
+    
+    // Person
+    drawDetailedPerson(ctx, 210, 300, '#861BE3');
+    
+    // Moon
+    ctx.shadowColor = '#861BE3';
+    ctx.shadowBlur = 20;
+    ctx.fillStyle = '#861BE3';
+    ctx.beginPath();
+    ctx.arc(w - 70, 60, 35, 0, Math.PI * 2);
+    ctx.fill();
+    // Moon craters
+    ctx.fillStyle = '#1a1f3a';
+    ctx.beginPath();
+    ctx.arc(w - 80, 55, 8, 0, Math.PI * 2);
+    ctx.arc(w - 60, 70, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    
+    // Coffee
+    drawCoffeeCupWithSteam(ctx, 410, 240);
+    
+    // Clock
+    drawDigitalClock(ctx, 40, 40, '20:30');
+    
+    // Stars
+    ctx.fillStyle = '#FFFFFF';
+    for (let i = 0; i < 20; i++) {
+        const x = Math.random() * (w - 100);
+        const y = Math.random() * 150;
+        ctx.fillRect(x, y, 2, 2);
+    }
+}
+
+function drawPresentationScene(ctx, w, h) {
+    // Presentation hall
+    ctx.fillStyle = '#1D2633';
+    ctx.fillRect(0, 0, w, h);
+    
+    // Stage
+    ctx.fillStyle = '#0a0f18';
+    ctx.fillRect(70, 300, 540, 110);
+    ctx.strokeStyle = '#44EB99';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(70, 300, 540, 110);
+    
+    // Presentation screen
+    ctx.fillStyle = '#0a0f18';
+    ctx.fillRect(210, 50, 280, 190);
+    ctx.strokeStyle = '#44EB99';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(210, 50, 280, 190);
+    
+    // Screen content (project visualization)
+    ctx.fillStyle = '#861BE3';
+    ctx.fillRect(240, 80, 75, 55);
+    ctx.fillStyle = '#44EB99';
+    ctx.fillRect(335, 100, 65, 50);
+    ctx.fillStyle = '#FFB305';
+    ctx.fillRect(280, 170, 85, 55);
+    
+    // Presenter
+    drawDetailedPerson(ctx, 160, 340, '#FFB305', 1.4);
+    
+    // Spotlight
+    const spotlightGrad = ctx.createRadialGradient(160, 300, 0, 160, 300, 90);
+    spotlightGrad.addColorStop(0, 'rgba(255, 179, 5, 0.4)');
+    spotlightGrad.addColorStop(1, 'rgba(255, 179, 5, 0)');
+    ctx.fillStyle = spotlightGrad;
+    ctx.beginPath();
+    ctx.arc(160, 300, 90, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Audience (2 rows)
+    for (let row = 0; row < 2; row++) {
+        for (let col = 0; col < 6; col++) {
+            drawDetailedPerson(ctx, 220 + col * 60, 370 + row * 40, '#C6CFDA', 0.7);
         }
+    }
+    
+    // Applause
+    ctx.fillStyle = '#44EB99';
+    ctx.font = '18px Share Tech Mono';
+    ctx.fillText('👏', 570, 350);
+    ctx.fillText('👏', 600, 390);
+}
 
-        function renderQuestion() {
-            const q = questions[currentQ];
-            document.getElementById('quest-title').innerText = `>> СЦЕНАРИЙ ${currentQ + 1}/${questions.length}`;
-            document.getElementById('quest-text').innerText = q.text;
-            document.getElementById('choice-a').innerText = `[A] ${q.a}`;
-            document.getElementById('choice-b').innerText = `[B] ${q.b}`;
-            document.getElementById('progress').style.width = `${((currentQ) / questions.length) * 100}%`;
+// Helper drawing functions
+function drawDetailedBuilding(ctx, x, y, w, h, color, borderColor) {
+    // Main building
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = borderColor;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, w, h);
+    
+    // Windows (detailed)
+    const winW = (w - 20) / 3;
+    const winH = (h - 20) / 6;
+    for (let row = 0; row < 6; row++) {
+        for (let col = 0; col < 3; col++) {
+            const isLit = Math.random() > 0.3;
+            ctx.fillStyle = isLit ? '#44EB99' : '#1a1f2a';
+            ctx.fillRect(
+                x + 10 + col * (winW + 5),
+                y + 10 + row * (winH + 5),
+                winW,
+                winH
+            );
         }
+    }
+    
+    // Entrance
+    ctx.fillStyle = '#2a3551';
+    ctx.fillRect(x + w/2 - 20, y + h - 40, 40, 40);
+}
 
-        function nextQuestion(choice) {
-            currentQ++;
-            if (currentQ < questions.length) {
-                renderQuestion();
-            } else {
-                showResult();
-            }
-        }
+function drawDetailedPerson(ctx, x, y, color, scale = 1) {
+    const s = scale;
+    // Head
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y - 18 * s, 10 * s, 0, Math.PI * 2);
+    ctx.fill();
+    // Body
+    ctx.fillRect(x - 8 * s, y - 8 * s, 16 * s, 18 * s);
+    // Arms
+    ctx.fillRect(x - 12 * s, y - 5 * s, 4 * s, 14 * s);
+    ctx.fillRect(x + 8 * s, y - 5 * s, 4 * s, 14 * s);
+    // Legs
+    ctx.fillRect(x - 7 * s, y + 10 * s, 6 * s, 14 * s);
+    ctx.fillRect(x + 1 * s, y + 10 * s, 6 * s, 14 * s);
+}
 
-        function showResult() {
-            showScreen('screen-result');
-            document.getElementById('progress').style.width = '100%';
-            
-            let role = "Новичок в коде";
-            let desc = "Ты только в начале пути, но кампус 21×РУДН поможет тебе раскрыть потенциал.";
-            
-            if (stats.cha > stats.int && stats.cha > stats.end) {
-                role = "Евангелист комьюнити";
-                desc = "Твоя суперсила — люди. Ты знаешь всех в кампусе, а баги находят тебя сами.";
-            } else if (stats.int > stats.cha && stats.int > stats.end) {
-                role = "Архитектор алгоритмов";
-                desc = "Ты решаешь задачи, пока другие читают документацию. Твой код чист, как слеза.";
-            } else if (stats.end > stats.int && stats.end > stats.cha) {
-                role = "Выносливый кодер";
-                desc = "Ты можешь дебажить 48 часов подряд. Кампус 21×РУДН — твой второй дом.";
-            }
+function drawRunningPerson(ctx, x, y, color) {
+    // Head
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y - 20, 8, 0, Math.PI * 2);
+    ctx.fill();
+    // Body (leaning forward)
+    ctx.fillRect(x - 6, y - 10, 12, 16);
+    // Arms (running position)
+    ctx.fillRect(x - 10, y - 8, 4, 12);
+    ctx.fillRect(x + 6, y - 5, 4, 10);
+    // Legs (running)
+    ctx.fillRect(x - 8, y + 6, 5, 12);
+    ctx.fillRect(x + 3, y + 4, 5, 14);
+}
 
-            document.getElementById('result-title').innerText = `${playerName}, твой класс: ${role}`;
-            document.getElementById('result-desc').innerText = desc;
-        }
-    </script>
+function drawPullupPerson(ctx, x, y, color) {
+    // Head
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y - 25, 7, 0, Math.PI * 2);
+    ctx.fill();
+    // Body (hanging)
+    ctx.fillRect(x - 6, y - 15, 12, 18);
+    // Arms (up)
+    ctx.fillRect(x - 10, y - 25, 4, 12);
+    ctx.fillRect(x + 6, y - 25, 4, 12);
+    // Legs (bent)
+    ctx.fillRect(x - 6, y + 3, 5, 10);
+    ctx.fillRect(x + 1, y + 3, 5, 10);
+}
+
+function drawYogaPerson(ctx, x, y, color) {
+    // Head
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y - 15, 7, 0, Math.PI * 2);
+    ctx.fill();
+    // Body (sitting)
+    ctx.fillRect(x - 7, y - 5, 14, 12);
+    // Legs (lotus)
+    ctx.fillRect(x - 10, y + 7, 8, 6);
+    ctx.fillRect(x + 2, y + 7, 8, 6);
+    // Arms (meditation)
+    ctx.fillRect(x - 12, y - 2, 4, 10);
+    ctx.fillRect(x + 8, y - 2, 4, 10);
+}
+
+function drawDetailedLaptop(ctx, x, y, scale = 1) {
+    const s = scale;
+    // Screen
+    ctx.fillStyle = '#0a0f18';
+    ctx.fillRect(x - 22 * s, y - 28 * s, 44 * s, 28 * s);
+    ctx.strokeStyle = '#44EB99';
+    ctx.lineWidth = 2 * s;
+    ctx.strokeRect(x - 22 * s, y - 28 * s, 44 * s, 28 * s);
+    // Base
+    ctx.fillStyle = '#18DD7C';
+    ctx.fillRect(x - 24 * s, y, 48 * s, 10 * s);
+}
+
+function drawCoffeeCupWithSteam(ctx, x, y) {
+    // Cup
+    ctx.fillStyle = '#C6CFDA';
+    ctx.fillRect(x - 12, y - 14, 24, 20);
+    // Handle
+    ctx.strokeStyle = '#C6CFDA';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(x + 12, y - 4, 7, -Math.PI/2, Math.PI/2);
+    ctx.stroke();
+    // Steam
+    ctx.strokeStyle = 'rgba(68, 235, 153, 0.5)';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(x - 6 + i * 6, y - 17);
+        ctx.lineTo(x - 6 + i * 6 + Math.random() * 4, y - 28);
+        ctx.stroke();
+    }
+}
+
+function drawFoodTray(ctx, x, y) {
+    // Tray
+    ctx.fillStyle = '#FFB305';
+    ctx.fillRect(x, y, 45, 32);
+    // Food items
+    ctx.fillStyle = '#44EB99';
+    ctx.fillRect(x + 5, y + 5, 15, 12);
+    ctx.fillRect(x + 25, y + 5, 15, 12);
+    ctx.fillStyle = '#861BE3';
+    ctx.fillRect(x + 5, y + 20, 35, 8);
+}
+
+function drawDigitalClock(ctx, x, y, time) {
+    ctx.fillStyle = '#1D2633';
+    ctx.fillRect(x, y, 90, 35);
+    ctx.strokeStyle = '#44EB99';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, 90, 35);
+    ctx.fillStyle = '#44EB99';
+    ctx.font = 'bold 16px Share Tech Mono';
+    ctx.fillText(time, x + 10, y + 23);
+}
+
+function drawTree(ctx, x, y) {
+    // Trunk
+    ctx.fillStyle = '#2a3551';
+    ctx.fillRect(x, y, 15, 80);
+    // Leaves
+    ctx.fillStyle = '#18DD7C';
+    ctx.beginPath();
+    ctx.moveTo(x - 20, y + 20);
+    ctx.lineTo(x + 7, y - 40);
+    ctx.lineTo(x + 35, y + 20);
+    ctx.fill();
+}
+
+function drawMeme(rank, percentage) {
+    const canvas = document.getElementById('memeCanvas');
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    
+    // Background
+    ctx.fillStyle = '#101518';
+    ctx.fillRect(0, 0, w, h);
+    
+    // Border
+    ctx.strokeStyle = '#44EB99';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(8, 8, w - 16, h - 16);
+    
+    // Title
+    ctx.fillStyle = '#FFB305';
+    ctx.font = 'bold 20px Share Tech Mono';
+    ctx.textAlign = 'center';
+    ctx.fillText('ШКОЛА 21 × РУДН', w/2, 35);
+    ctx.fillText('ОДИН ДЕНЬ', w/2, 58);
+    
+    // Line
+    ctx.strokeStyle = '#44EB99';
+    ctx.beginPath();
+    ctx.moveTo(20, 70);
+    ctx.lineTo(w - 20, 70);
+    ctx.stroke();
+    
+    // Mascot Duck
+    drawDuckMascot(ctx, w/2, 130, 0.8);
+    
+    // Rank
+    ctx.fillStyle = '#44EB99';
+    ctx.font = 'bold 18px Share Tech Mono';
+    ctx.fillText(`РАНГ: ${rank}`, w/2, 200);
+    
+    // Score
+    const maxScore = quests.reduce((sum, q) => sum + Math.max(...q.choices.map(c => c.score)), 0);
+    ctx.fillStyle = '#FFB305';
+    ctx.font = 'bold 24px Share Tech Mono';
+    ctx.fillText(`${gameState.score} / ${maxScore}`, w/2, 235);
+    
+    // Percentage
+    ctx.fillStyle = '#861BE3';
+    ctx.font = 'bold 36px Share Tech Mono';
+    ctx.fillText(`${percentage}%`, w/2, 285);
+    
+    // Stats
+    ctx.fillStyle = '#C6CFDA';
+    ctx.font = '12px Share Tech Mono';
+    ctx.fillText(`INT: ${gameState.stats.int} | CHA: ${gameState.stats.cha} | END: ${gameState.stats.end}`, w/2, 320);
+    
+    // Footer
+    ctx.fillStyle = '#44EB99';
+    ctx.font = 'bold 11px Share Tech Mono';
+    ctx.fillText('ПРИХОДИ В КАМПУС!', w/2, 355);
+    ctx.fillText(`ИГРОК: ${gameState.name}`, w/2, 375);
+}
+
+function drawDuckMascot(ctx, x, y, scale) {
+    const s = scale;
+    // Body
+    ctx.fillStyle = '#44EB99';
+    ctx.beginPath();
+    ctx.ellipse(x, y + 10 * s, 25 * s, 20 * s, 0, 0, Math.PI * 2);
+    ctx.fill();
+    // Head
+    ctx.beginPath();
+    ctx.arc(x - 8 * s, y - 10 * s, 15 * s, 0, Math.PI * 2);
+    ctx.fill();
+    // Beak
+    ctx.fillStyle = '#FFB305';
+    ctx.beginPath();
+    ctx.ellipse(x + 10 * s, y - 12 * s, 10 * s, 5 * s, 0, 0, Math.PI * 2);
+    ctx.fill();
+    // Eye
+    ctx.fillStyle = '#101518';
+    ctx.beginPath();
+    ctx.arc(x - 5 * s, y - 15 * s, 4 * s, 0, Math.PI * 2);
+    ctx.fill();
+    // Eye shine
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath();
+    ctx.arc(x - 7 * s, y - 17 * s, 2 * s, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+function downloadMeme() {
+    const canvas = document.getElementById('memeCanvas');
+    const link = document.createElement('a');
+    link.download = `school21_rudn_${gameState.name}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+
+function restartGame() {
+    gameState = {
+        name: '',
+        stats: { int: 0, cha: 0, end: 0 },
+        pointsLeft: 10,
+        currentScene: 0,
+        score: 0,
+        choices: []
+    };
+    
+    document.getElementById('charName').value = '';
+    document.getElementById('pointsLeft').textContent = '10';
+    document.getElementById('startBtn').disabled = true;
+    
+    ['int', 'cha', 'end'].forEach(stat => {
+        gameState.stats[stat] = 0;
+        updateStatDisplay(stat);
+    });
+    gameState.pointsLeft = 10;
+    updateButtons();
+    
+    document.getElementById('resultScreen').classList.add('hidden');
+    document.getElementById('startScreen').classList.remove('hidden');
+    document.getElementById('startScreen').classList.add('fade-in');
+}
+
+// Initialize
+loadLeaderboard();
+updateButtons();
+</script>
 </body>
 </html>
